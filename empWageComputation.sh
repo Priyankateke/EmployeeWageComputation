@@ -6,12 +6,15 @@ readonly IS_PART_TIME=1
 readonly IS_FULL_TIME=2
 readonly EMP_RATE_PER_HRS=20
 readonly NUM_OF_WORKING_DAYS=20
+readonly TOTAL_WORKING_HRS=100
 
 #variables
 totalSalary=0
+empWorkingHours=0
 
-for(( dayCount=1; dayCount<=NUM_OF_WORKING_DAYS; dayCount++ ))
+while [[ $empWorkingHours -lt $TOTAL_WORKING_HRS && $dayCount -lt $NUM_OF_WORKING_DAYS ]]
 do
+	((dayCount++))
 	empCheck=$(( RANDOM%3 ))
 	case $empCheck in
 		$IS_PART_TIME)
@@ -24,6 +27,6 @@ do
 			empHours=0
 			;;
 	esac
-	perDaySalary=$(( $empHours*EMP_RATE_PER_HRS ))
-	totalSalary=$((totalSalary+perDaySalary))
+	empWorkingHours=$((empWorkingHours+empHours))
 done
+totalSalary=$(( $empWorkingHours*EMP_RATE_PER_HRS ))
