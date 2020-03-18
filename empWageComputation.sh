@@ -6,8 +6,10 @@ readonly IS_EMP_PRESENT=1
 
 empAttendance=$(( RANDOM%2 ))
 
-if [ $IS_EMP_PRESENT -eq $empAttendance ]; then
-	echo "Employee is present"
+if [ $IS_EMP_PRESENT -eq $empAttendance ]; then 
+	empRatePerHrs=20 
+	empHours=8 
+	salary=$((empHours*empRatePerHrs))
 else
-	echo "Employee is absent"
+	salary=0
 fi
