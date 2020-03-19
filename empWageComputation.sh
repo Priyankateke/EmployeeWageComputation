@@ -12,10 +12,9 @@ readonly TOTAL_WORKING_HRS=100
 totalSalary=0
 empWorkingHours=0
 
-while [[ $empWorkingHours -lt $TOTAL_WORKING_HRS && $dayCount -lt $NUM_OF_WORKING_DAYS ]]
-do
-	((dayCount++))
-	empCheck=$(( RANDOM%3 ))
+function getWorkingHours()
+{
+	local empCheck=$1
 	case $empCheck in
 		$IS_PART_TIME)
 			empHours=4
@@ -27,6 +26,14 @@ do
 			empHours=0
 			;;
 	esac
+	echo $empHours
+}
+
+while [[ $empWorkingHours -lt $TOTAL_WORKING_HRS && $dayCount -lt $NUM_OF_WORKING_DAYS ]]
+do
+	((dayCount++))
+	empHours="$( getWorkingHours $((RANDOM%3)) )"
 	empWorkingHours=$((empWorkingHours+empHours))
 done
+
 totalSalary=$(( $empWorkingHours*EMP_RATE_PER_HRS ))
