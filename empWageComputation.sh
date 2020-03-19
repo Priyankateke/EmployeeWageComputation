@@ -9,7 +9,7 @@ readonly NUM_OF_WORKING_DAYS=20
 readonly TOTAL_WORKING_HRS=100
 
 #variables
-totalSalary=0
+dayCount=0
 empWorkingHours=0
 
 function getWorkingHours()
@@ -29,11 +29,19 @@ function getWorkingHours()
 	echo $empHours
 }
 
+function calculateDailyWage()
+{
+	local empHrs=$1
+	wage=$(($empHrs*EMP_RATE_PER_HRS))
+	echo $wage
+}
 while [[ $empWorkingHours -lt $TOTAL_WORKING_HRS && $dayCount -lt $NUM_OF_WORKING_DAYS ]]
 do
 	((dayCount++))
 	empHours="$( getWorkingHours $((RANDOM%3)) )"
-	empWorkingHours=$((empWorkingHours+empHours))
+	empWorkingHours=$(($empWorkingHours+$empHours))
+	empDailyWage[$dayCount]="$( calculateDailyWage $empHours )"
 done
 
-totalSalary=$(( $empWorkingHours*EMP_RATE_PER_HRS ))
+totalSalary="$( calculateDailyWage $empWorkingHours )"
+echo "Daily Wage Of Employees: ${empDailyWage[@]}"
